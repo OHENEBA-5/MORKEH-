@@ -1,0 +1,99 @@
+<html>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OHENEBA MORKEH AI</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fdfcfc;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    max-width: 800px;
+    background-color: #dee7dc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  input[type="text"] {a
+    width: calc(100% - 100px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  button {
+    padding: 10px 20px;cd
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+  }
+  button:hover {
+    background-color: #b30000;
+  }
+  button:active {
+    transform: translateY(1px);
+  }
+  .answer {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>OHENEBA MORKEH AI</h1>
+  <input type="text" id="questionInput" placeholder="Ask Morkeh">
+  <button onclick="askQuestion()">Ask</button>
+  <div class="answer" id="answer"></div>
+</div>
+<script>
+function askQuestion() {
+  const question = document.getElementById('questionInput').value.trim();
+  if (question === '') {
+    alert('Please enter a question.');
+    return;
+  }
+  
+  const apiUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(question)}&format=json`;
+  
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      if (data.AbstractText) {
+        showAnswer(data.AbstractText);
+      } else if (data.RelatedTopics && data.RelatedTopics.length > 0 && data.RelatedTopics[0].Text) {
+        showAnswer(data.RelatedTopics[0].Text);
+      } else {
+        showAnswer('Sorry, I could not find an answer to that question.');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      showAnswer('An error occurred while fetching the answer. Please try again later.');
+    });
+}
+
+function showAnswer(answer) {
+  document.getElementById('answer').textContent = answer;
+}
+</script>
+</body>
+</html>
+</html>
